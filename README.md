@@ -8,7 +8,7 @@ Este projeto consiste em um pipeline de ETL (Extract, Transform, Load) e Anális
 
 O objetivo é processar um grande volume de dados históricos (2010 a 2020), limpar inconsistências e extrair insights sobre o comportamento dos usuários e o acervo, preparando a base para tomadas de decisão.
 
-## 🛠 Tecnologias Utilizadas
+## 🛠 Tecnologias Utilizadas no projeto
 
 - Linguagem: Python 3
 
