@@ -121,5 +121,18 @@ if 'CDU' in df_filtrado.columns:
 else:
     st.warning("A coluna 'CDU' não foi encontrada no dataset.")
 
+
+# Gráficos de distribuição de empréstimos mensais por tipos de alunos
+
+st.markdown("### 🎓 Empréstimos Mensais por Tipo de Aluno")
+
+if 'tipo_vinculo_usuario' in df_filtrado.columns:
+    emprestimos_mes_vinculo = df_filtrado.groupby(['Mes', 'tipo_vinculo_usuario']).size().reset_index(name='Quantidade')
+    emprestimos_mes_vinculo['Mês'] = emprestimos_mes_vinculo['Mes'].map(meses_map)
+    
+    fig_mes_vinculo = px.bar(emprestimos_mes_vinculo, x='Mês', y='Quantidade', color='tipo_vinculo_usuario',
+                             title="Empréstimos Mensais por Tipo de Aluno",
+                             color_discrete_sequence=px.colors.qualitative.Set2)
+    st.plotly_chart(fig_mes_vinculo, use_container_width=True)
 st.markdown("---")
 st.markdown("Desenvolvido para análise de dados.")
