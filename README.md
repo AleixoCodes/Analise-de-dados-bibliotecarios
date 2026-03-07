@@ -1,46 +1,52 @@
-# Análise de Dados de Biblioteca Universitária 📚
+# 📚 Análise de Dados de Biblioteca Universitária (UFRN)
 
-> 🚧 Projeto em desenvolvimento 🚧
+![Python](https://img.shields.io/badge/Python-3.9%2B-blue?style=for-the-badge&logo=python&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-Data_Analysis-150458?style=for-the-badge&logo=pandas&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-red?style=for-the-badge&logo=streamlit&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Concluído-success?style=for-the-badge)
 
 ## 📋 Sobre o Projeto
 
-Este projeto consiste em um pipeline de ETL (Extract, Transform, Load) e Análise Exploratória de Dados (EDA) focado no sistema de empréstimos das bibliotecas da UFRN (Universidade Federal do Rio Grande do Norte). 
+Este projeto consiste em um pipeline de **ETL (Extract, Transform, Load)** e **Análise Exploratória de Dados (EDA)** focado no sistema de empréstimos das bibliotecas da UFRN (Universidade Federal do Rio Grande do Norte).
 
-O objetivo é processar um grande volume de dados históricos (abrangendo o período de 2010 a 2020, com **mais de 2 milhões de registros**), limpar inconsistências e extrair insights sobre o comportamento dos usuários e a utilização do acervo, preparando a base para tomadas de decisão.
+O projeto evoluiu de uma análise estática em Jupyter Notebook para um **Dashboard Interativo**, permitindo a visualização dinâmica dos dados históricos (2010-2020).
 
-> **Nota:** Este projeto foi desenvolvido seguindo as diretrizes e propostas do desafio **#7DaysOfCode - Pandas**, promovido pela **Alura**.
+> **Contexto:** Este projeto foi desenvolvido seguindo as diretrizes do desafio **#7DaysOfCode - Pandas**, promovido pela **Alura**.
 
-## 🛠 Tecnologias Utilizadas
+---
 
-- **Linguagem:** Python 3
-- **Manipulação de Dados:** Pandas, NumPy
-- **Visualização de Dados:** Matplotlib, Seaborn
-- **Formatos de Arquivo:** CSV, Parquet
-- **Ambiente de Desenvolvimento:** Google Colab / Jupyter Notebook
+## 📊 Dashboard Interativo
+
+Acesse a aplicação em tempo real para explorar os gráficos e filtros:
+
+> 🔗 **[Clique aqui para acessar o Dashboard Online](https://dashboard-emprestimo.streamlit.app/)**
+
+---
 
 ## 🚀 Funcionalidades e Etapas do Pipeline
 
 **1. Coleta e Ingestão de Dados:**
 - Importação de múltiplos arquivos CSV (dados de empréstimos divididos por semestres).
-- Leitura de arquivos Parquet (dados cadastrais dos exemplares).
-- Concatenação de DataFrames para consolidar o histórico completo.
+- Consolidação de **mais de 2 milhões de registros** em um único dataset.
 
 **2. Limpeza e Pré-processamento:**
-- Remoção de duplicatas para garantir a integridade das análises.
-- Tratamento de valores nulos e inconsistentes.
-- Conversão de tipos de dados (ex: formatação de strings para objetos `datetime`).
+- Remoção de duplicatas e tratamento de valores nulos.
+- **Engenharia de Atributos (Feature Engineering):** - Implementação da lógica **CDU (Classificação Decimal Universal)** para categorizar livros por tema.
+    - Extração temporal (Ano, Mês, Hora) para análise de sazonalidade.
 
-**3. Feature Engineering (Engenharia de Atributos):**
-- Implementação da lógica **CDU (Classificação Decimal Universal)**: Criação de um algoritmo que categoriza os livros com base no código de localização (ex: códigos entre 600-699 são classificados como "Ciências Aplicadas").
-- Criação de colunas derivadas para facilitar a análise temporal (ano, mês, etc.).
+**3. Visualização de Dados:**
+- Análise de tendências temporais (Empréstimos por Ano/Mês).
+- Estudo de horários de pico e perfil dos usuários.
+- Gráficos interativos com **Plotly**.
 
-**4. Análise Exploratória (Em andamento):**
-- Contagem e volume de empréstimos por ano.
-- Identificação dos gêneros e temas literários mais populares (via classificação CDU).
-- Análise de comportamento e tendências de renovações de exemplares.
+---
 
-## 📂 Estrutura do Notebook
+## 🛠 Tecnologias Utilizadas
 
-O projeto está estruturado em um Jupyter Notebook (.ipynb) que documenta passo a passo o raciocínio analítico, desde a importação bruta até as visualizações finais.
-##
-Este projeto faz parte do meu portfólio de Ciência de Dados e demonstra habilidades em manipulação de grandes volumes de dados.
+- **Linguagem:** Python 3
+- **Manipulação de Dados:** Pandas, NumPy
+- **Visualização (Notebook):** Matplotlib, Seaborn
+- **Visualização (Dashboard):** Plotly Express, Streamlit
+- **Formatos de Arquivo:** CSV, Parquet
+
+---
