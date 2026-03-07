@@ -11,11 +11,11 @@ Este dashboard interativo foi desenvolvido para analisar os dados de empréstimo
 do sistema de bibliotecas da UFRN. Você pode interagir com os gráficos passando o mouse e usando os filtros laterais.
 """)
 
-# 2. Função para carregar os dados (o @st.cache_data ajuda o dashboard a não carregar o CSV toda hora)
+# 2. Função para carregar os dados (o @st.cache_data ajuda o dashboard a não carregar o parquet toda hora)
 @st.cache_data
 def load_data():
     # Lê o dataset gerado no final do seu Jupyter Notebook
-    df = pd.read_csv("DadosCompletos.csv", sep=";")
+    df = pd.read_parquet("DadosCompletos.parquet")
     
     # Converte a coluna de data para o formato datetime correto do pandas
     df['data_emprestimo'] = pd.to_datetime(df['data_emprestimo'], errors='coerce')
@@ -121,18 +121,27 @@ if 'CDU' in df_filtrado.columns:
 else:
     st.warning("A coluna 'CDU' não foi encontrada no dataset.")
 
+st.divider()
 
-# Gráficos de distribuição de empréstimos mensais por tipos de alunos
+st.markdown("### 🎓 Empréstimos por Tipo de Aluno")
 
-st.markdown("### 🎓 Empréstimos Mensais por Tipo de Aluno")
+boxplot_graduacao, boxplot_Pos = st.columns(2)
 
-if 'tipo_vinculo_usuario' in df_filtrado.columns:
-    emprestimos_mes_vinculo = df_filtrado.groupby(['Mes', 'tipo_vinculo_usuario']).size().reset_index(name='Quantidade')
-    emprestimos_mes_vinculo['Mês'] = emprestimos_mes_vinculo['Mes'].map(meses_map)
-    
-    fig_mes_vinculo = px.bar(emprestimos_mes_vinculo, x='Mês', y='Quantidade', color='tipo_vinculo_usuario',
-                             title="Empréstimos Mensais por Tipo de Aluno",
-                             color_discrete_sequence=px.colors.qualitative.Set2)
-    st.plotly_chart(fig_mes_vinculo, use_container_width=True)
+with boxplot_graduacao:
+    alunosGraduacao = df_filtrado[df_filtrado['tipo_vinculo_usuario'] == 'ALUNO DE GRADUAÇÃO']
+    agrupando = alunosGraduacao.groupby(['Ano', 'Mes']).size().reset_index(name='quantidade_emprestimos')
+    fig_box_graduacao = px.box(agrupando, x='Ano', y='quantidade_emprestimos', 
+                              title="Distribuição de Empréstimos por Mês para Alunos de Graduação",
+                              color='Ano')
+    boxplot_graduacao.plotly_chart(fig_box_graduacao, use_container_width=True)
+
+with boxplot_Pos:
+    alunosPos = df_filtrado[df_filtrado['tipo_vinculo_usuario'] == 'ALUNO DE PÓS-GRADUAÇÃO']
+    agrupando = alunosPos.groupby(['Ano', 'Mes']).size().reset_index(name='quantidade_emprestimos')
+    fig_box_pos = px.box(agrupando, x='Ano', y='quantidade_emprestimos', 
+                         title="Distribuição de Empréstimos por Mês para Alunos de Pós-Graduação",
+                         color='Ano')
+    boxplot_Pos.plotly_chart(fig_box_pos, use_container_width=True)
+
 st.markdown("---")
 st.markdown("Desenvolvido para análise de dados.")
